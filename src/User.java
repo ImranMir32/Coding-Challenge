@@ -33,7 +33,7 @@ class User {
 
     public void displayFavoriteMovies(Scanner scanner) {
         if (favoriteMovies.isEmpty()) {
-            System.out.println("No favorite movies found for this user.");
+            System.out.println("No favorite movies found for this user.\n");
         } else {
             System.out.println("Favorite Movies:");
             for (int i = 0; i < favoriteMovies.size(); i++) {
@@ -55,6 +55,16 @@ class User {
                 return;
             }
         }
+    }
+
+    public void displayDetailsAndFavorites(Scanner scanner) {
+        System.out.println();
+        System.out.println("User Details: ");
+        System.out.println("Name: " + name);
+        System.out.println("Email: " + email);
+        
+        System.out.println();
+        displayFavoriteMovies(scanner);
     }
     
 }

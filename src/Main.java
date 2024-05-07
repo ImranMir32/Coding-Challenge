@@ -54,7 +54,7 @@ public class Main {
     }
 
     public static void Home(Scanner scanner, User user){
-        System.out.print("Enter 1 for searching movies, 2 for See movie details by Title, 3 for Favorite Movies List and 0 to exit: ");
+        System.out.print("Enter 1 for searching movies, 2 for See movie details by Title, 3 for Favorite Movies List, 4 for all details and 0 to exit: ");
 
         String input = scanner.nextLine();
 
@@ -70,6 +70,9 @@ public class Main {
         }
         else if(input.equals("3")){
             user.displayFavoriteMovies(scanner);
+        }
+        else if(input.equals("4")){
+            user.displayDetailsAndFavorites(scanner);
         }
 
         return;
