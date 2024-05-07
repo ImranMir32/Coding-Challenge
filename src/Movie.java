@@ -41,5 +41,6 @@ class Movie {
         System.out.println("Category: " + category);
         System.out.println("Release Date: " + releaseDate);
         System.out.println("Budget: $" + budget + " million");
+        System.out.println();
     }
 }

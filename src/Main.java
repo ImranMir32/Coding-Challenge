@@ -80,7 +80,7 @@ public class Main {
     }
 
     public static void Home(Scanner scanner){
-        System.out.print("Enter 1 for searching movies, 0 to exit: ");
+        System.out.print("Enter 1 for searching movies, 2 for See movie details by Title and 0 to exit: ");
 
         String input = scanner.nextLine();
 
@@ -90,6 +90,9 @@ public class Main {
 
         if (input.equals("1")){
             searchMovies(scanner);
+        }
+        else if (input.equals("2")){
+            displayMovieDetails(scanner);
         }
 
         return;
@@ -124,4 +127,23 @@ public class Main {
     }
 
 
+    public static void displayMovieDetails(Scanner scanner) {
+        System.out.print("Enter the title of the movie to see details: ");
+            String title = scanner.nextLine();
+            Movie selectedMovie = findMovieByTitle(title, movies);
+            if (selectedMovie != null) {
+                selectedMovie.displayDetails();
+            } else {
+                System.out.println("Movie not found.\n");
+            }
+    }
+
+    public static Movie findMovieByTitle(String title, List<Movie> movies) {
+        for (Movie movie : movies) {
+            if (movie.getTitle().equalsIgnoreCase(title)) {
+                return movie;
+            }
+        }
+        return null;
+    }
 }
