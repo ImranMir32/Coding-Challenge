@@ -54,7 +54,7 @@ public class Main {
     }
 
     public static void Home(Scanner scanner, User user){
-        System.out.print("Enter 1 for searching movies, 2 for See movie details by Title and 0 to exit: ");
+        System.out.print("Enter 1 for searching movies, 2 for See movie details by Title, 3 for Favorite Movies List and 0 to exit: ");
 
         String input = scanner.nextLine();
 
@@ -67,6 +67,9 @@ public class Main {
         }
         else if (input.equals("2")){
             displayMovieDetails(scanner);
+        }
+        else if(input.equals("3")){
+            user.displayFavoriteMovies(scanner);
         }
 
         return;
@@ -88,6 +91,7 @@ public class Main {
 
         if (matchingMovies.isEmpty()) {
             System.out.println("No matching movies found.\n");
+            return;
         } else {
             Collections.sort(matchingMovies, Comparator.comparing(Movie::getTitle));
 
@@ -104,10 +108,15 @@ public class Main {
                 selectedMovie.setFavorite(true);
                 user.addFavoriteMovie(selectedMovie);
                 System.out.println(selectedMovie.getTitle() + " added to favorites.");
+            } else {
+                System.out.println("Invalid choice.");
+                return;
             }
 
             System.out.println();
-            user.displayFavoriteMovies();
+            System.out.println("List of your favorite movies");
+            user.displayFavoriteMovies(scanner);
+            System.err.println();
         }
         return;
     }
@@ -132,4 +141,5 @@ public class Main {
         }
         return null;
     }
+    
 }
