@@ -11,10 +11,9 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Welcome to Movie Listing App\n");
-        RegisterUser registerUser = new RegisterUser();
 
         while (true) {
-            System.out.print("Enter 1 for registration, 2 for login and 0 to exit : ");
+            System.out.print("Enter 1 for registration and 0 to exit : ");
 
             String input = scanner.nextLine();
 
@@ -24,11 +23,18 @@ public class Main {
             }
 
             if (input.equals("1")){
-                register(registerUser, scanner); 
+                System.out.println("For registration ->");
+                System.out.print("Enter your email: ");
+                String email = scanner.nextLine();
+                System.out.print("Enter your name : ");
+                String name = scanner.nextLine();
+                
+                User user = new User(email, name);
+                while (true) {
+                    Home(scanner, user);
+                }
             }
-            else if (input.equals("2")) {
-                login(registerUser, scanner); 
-            } else {
+            else {
                 System.out.println("Enter a valid option!!");
                 ContinueOrExit(scanner);
             }
@@ -36,38 +42,6 @@ public class Main {
         
     }
 
-    public static void register(RegisterUser registerUser, Scanner scanner) {
-        System.out.println("For registration ->");
-        System.out.print("Enter your email: ");
-        String email = scanner.nextLine();
-        System.out.print("Enter your name : ");
-        String name = scanner.nextLine();
-
-        registerUser.register(email, name); 
-        registerUser.displayRegisteredUsers(); 
-        System.out.println();
-        login(registerUser, scanner); 
-        return;
-    }
-
-    public static void login(RegisterUser registerUser, Scanner scanner) {
-        System.out.println("For login ->");
-        System.out.print("Enter your email: ");
-        String email = scanner.nextLine();
-
-        if (registerUser.checkedRegisterUser(email)) {
-            System.out.println("Login successful! Welcome back....\n");
-            while (true) {
-                Home(scanner);
-            }
-
-        } else {
-            System.out.println("Login failed. User not found. Please register first.\n");
-            ContinueOrExit(scanner);
-            
-        }
-        return;
-    }
 
     public static void ContinueOrExit(Scanner scanner){
         System.out.print("Enter 1 for continue and 0 to exit : ");
@@ -79,7 +53,7 @@ public class Main {
         return;
     }
 
-    public static void Home(Scanner scanner){
+    public static void Home(Scanner scanner, User user){
         System.out.print("Enter 1 for searching movies, 2 for See movie details by Title and 0 to exit: ");
 
         String input = scanner.nextLine();
@@ -89,7 +63,7 @@ public class Main {
         }
 
         if (input.equals("1")){
-            searchMovies(scanner);
+            searchMovies(scanner, user);
         }
         else if (input.equals("2")){
             displayMovieDetails(scanner);
@@ -98,7 +72,7 @@ public class Main {
         return;
     }
 
-    public static void searchMovies(Scanner scanner) {
+    public static void searchMovies(Scanner scanner, User user) {
         System.out.println("Search Movies:-> ");
         System.out.println("Enter search keyword (title, cast, or category): ");
         String keyword = scanner.nextLine().toLowerCase();
@@ -118,10 +92,22 @@ public class Main {
             Collections.sort(matchingMovies, Comparator.comparing(Movie::getTitle));
 
             System.out.println("Matching Movies: ");
-            for (Movie movie : matchingMovies) {
-                System.out.println("Title: " + movie.getTitle());
+            for (int i = 0; i < matchingMovies.size(); i++) {
+                System.out.println((i + 1) + ". " + matchingMovies.get(i).getTitle());
             }
             System.out.println();
+
+            System.out.print("Enter the number of the movie to add to favorites (or 0 to skip): ");
+            int choice = Integer.parseInt(scanner.nextLine());
+            if (choice > 0 && choice <= matchingMovies.size()) {
+                Movie selectedMovie = matchingMovies.get(choice - 1);
+                selectedMovie.setFavorite(true);
+                user.addFavoriteMovie(selectedMovie);
+                System.out.println(selectedMovie.getTitle() + " added to favorites.");
+            }
+
+            System.out.println();
+            user.displayFavoriteMovies();
         }
         return;
     }

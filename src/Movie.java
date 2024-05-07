@@ -6,6 +6,7 @@ class Movie {
     private String category;
     private String releaseDate;
     private double budget;
+    private boolean isFavorite;
 
     public Movie(String title, List<String> cast, String category, String releaseDate, double budget) {
         this.title = title;
@@ -13,6 +14,7 @@ class Movie {
         this.category = category;
         this.releaseDate = releaseDate;
         this.budget = budget;
+        this.isFavorite = false;
     }
 
     public String getTitle() {
@@ -35,12 +37,20 @@ class Movie {
         return budget;
     }
 
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
+
     public void displayDetails() {
         System.out.println("Movie Title: " + title);
         System.out.println("Cast: " + cast);
         System.out.println("Category: " + category);
         System.out.println("Release Date: " + releaseDate);
         System.out.println("Budget: $" + budget + " million");
-        System.out.println();
+        System.out.println("Favorite: " + (isFavorite ? "Yes" : "No"));
     }
 }
