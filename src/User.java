@@ -48,9 +48,7 @@ class User {
                 movieToRemove.setFavorite(false);
                 removeFavoriteMovie(movieToRemove);
                 System.out.println(movieToRemove.getTitle() + " removed from favorites.");
-            } else if (removeChoice == 0) {
-                return;
-            } else {
+            } else if (removeChoice != 0) {
                 System.out.println("Invalid choice.");
                 return;
             }

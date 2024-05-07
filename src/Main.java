@@ -54,7 +54,13 @@ public class Main {
     }
 
     public static void Home(Scanner scanner, User user){
-        System.out.print("Enter 1 for searching movies, 2 for See movie details by Title, 3 for Favorite Movies List, 4 for all details and 0 to exit: ");
+        System.out.println();
+        System.out.println("Enter 1 for searching movies : ");
+        System.out.println("Enter 2 for See movie details by Title : ");
+        System.out.println("Enter 3 for Favorite Movies List : ");
+        System.out.println("Enter 4 to see all details : ");
+        System.out.println("Enter 5 to search on only favorites movie list : ");
+        System.out.println("Enter 0 to exit : ");
 
         String input = scanner.nextLine();
 
@@ -74,7 +80,9 @@ public class Main {
         else if(input.equals("4")){
             user.displayDetailsAndFavorites(scanner);
         }
-
+        else if(input.equals("5")){
+            searchFavoriteMovies(scanner, user);
+        }
         return;
     }
 
@@ -111,9 +119,8 @@ public class Main {
                 selectedMovie.setFavorite(true);
                 user.addFavoriteMovie(selectedMovie);
                 System.out.println(selectedMovie.getTitle() + " added to favorites.");
-            } else {
+            } else if (choice != 0) {
                 System.out.println("Invalid choice.");
-                return;
             }
 
             System.out.println();
@@ -143,6 +150,33 @@ public class Main {
             }
         }
         return null;
+    }
+    
+
+
+   
+    public static void searchFavoriteMovies(Scanner scanner, User user) {
+        List<Movie> favoriteMovies = user.getFavoriteMovies();
+    
+        if (favoriteMovies.isEmpty()) {
+            System.out.println("No favorite movies found in your list.");
+        } else {
+            System.out.println("Favorite Movies:");
+            for (int i = 0; i < favoriteMovies.size(); i++) {
+                Movie movie = favoriteMovies.get(i);
+                System.out.println((i + 1) + ". " + movie.getTitle());
+            }
+    
+            System.out.println("Enter the number of the movie to view details (or 0 to exit):");
+            int choice = Integer.parseInt(scanner.nextLine());
+    
+            if (choice > 0 && choice <= favoriteMovies.size()) {
+                Movie selectedMovie = favoriteMovies.get(choice - 1);
+                selectedMovie.displayDetails();
+            } else if (choice != 0) {
+                System.out.println("Invalid choice.");
+            }
+        }
     }
     
 }
