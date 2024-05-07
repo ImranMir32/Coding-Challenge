@@ -18,4 +18,12 @@ public class RegisterUser {
             System.out.println("Email: " + entry.getKey() + ", Name: " + entry.getValue());
         }
     }
+
+    public boolean checkedRegisterUser(String email) {
+        if (users.containsKey(email)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
